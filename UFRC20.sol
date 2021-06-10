@@ -33,7 +33,7 @@ contract UFRC20 is auth, ReentrancyGuard, IUFRC20 {
     _name = name_;
     _symbol = symbol_;
     _totalSupply = totalSupply_*10**18;
-    _balanceOf[_msgSender()] = totalSupply_;
+    _balanceOf[_msgSender()] = totalSupply_*10**18;
         uint chainId;
         assembly {
             chainId := chainid()
