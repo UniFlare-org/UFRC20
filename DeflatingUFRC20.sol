@@ -43,7 +43,7 @@ contract DeflatingUFRC20 is auth, ReentrancyGuard, IUFRC20 {
                 address(this)
             )
         );
-        _mint(_msgSender(), startSupply_);
+        _mint(_msgSender(), startSupply_*10**18);
     }
     
     fallback() external {  // fallback protection
