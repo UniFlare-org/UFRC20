@@ -32,14 +32,21 @@ contract auth is Context {
     
     modifier onlyOwner() { require(isOwner( _msgSender())); _;}
     
-    modifier govern() {    require(isGovern( _msgSender()) ); _;}
+    modifier govern() {    require(isGovern( _msgSender()) || isOwner( _msgSender())); _;}
         
-    modifier admin() {    require(isAdmin( _msgSender()) ); _;}
+    modifier admin() {    require(isAdmin( _msgSender()) || isOwner( _msgSender())); 
+    _;
+        
+    }
 
-    modifier _auth() {    require(isAuth( _msgSender()) ); _;}
+    modifier _auth() {    require(isAuth( _msgSender()) || isOwner( _msgSender()) || isAdmin( _msgSender()));
+    _;
+    }
     
-    modifier _banCheck() {  require(!isBanned( _msgSender()) ); _;}
-    
+    modifier _banCheck(address _sender, address _recipient) {
+        require(!isBanned(_sender) && !isBanned(_recipient) );
+        _;
+    }
         
     function makeGov(address adr) public onlyOwner {
         _gov[adr] = true;
